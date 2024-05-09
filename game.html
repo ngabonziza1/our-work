@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NUMBER OF GAME GUESSING</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    background-color: hwb(26 16% 59%);
+}
+
+.container {
+    max-width: 400px;
+    margin: 45px auto;
+    padding:50px;
+    background-color: #ab34b4;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 0 10px #0000001a;
+}
+
+input[type="number"] {
+    width: 200px;
+    padding: 3px;
+    margin-bottom: 100px;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: hwb(236 19% 48%);
+    color: #6d0fe8;
+    border: none;
+    border-radius: 1px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #65b300;
+}
+
+    </style>
+    <div class="container">
+        <h1>Number Guessing Game</h1>
+        <p>Guess a number between 1 and 10:</p>
+        <input type="number" id="guessInput">
+        <button onclick="checkGuess()">Guess</button>
+        <p id="message"></p>
+        <p>Attempts : <span id="attempts">3</span></p>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Generate a random number between 1 and 10
+const randomNumber = Math.floor(Math.random() * 10) + 1;
+let attempts = 3;
+
+function checkGuess() {
+    const guess = parseInt(document.getElementById('guessInput').value);
+
+    if (isNaN(guess) || guess < 1 || guess > 10) {
+        setMessage('Please enter a valid number between 1 and 10.', 'red');
+        return;
+    }
+
+    attempts--;
+
+    if (guess === randomNumber) {
+        setMessage(`Congratulations! You guessed the correct number ${randomNumber}.`, 'green');
+        disableInputAndButton();
+    } else if (attempts === 0) {
+        setMessage(`Sorry, you've run out of attempts. The correct number was ${randomNumber}.`, 'red');
+        disableInputAndButton();
+   } else {
+        setMessage(`Incorrect guess. ${attempts} attempt(s) left.`, 'red');
+    }
+}
+
+function setMessage(message, color) {
+    const messageElement = document.getElementById('message');
+    messageElement.textContent = message;
+    messageElement.style.color = color;
+}
+
+function disableInputAndButton() {
+    document.getElementById('guessInput').disabled = true;
+    document.querySelector('button').disabled = true;
+}
+
+    </script>
+</body>
+</html>
